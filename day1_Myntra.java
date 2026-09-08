@@ -31,7 +31,7 @@ public class day1_Myntra {
 		}else {
 			System.out.println("product isnot added");
 		}
-
+		driver.close();
 	}
 
 }
