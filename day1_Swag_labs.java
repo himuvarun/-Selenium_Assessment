@@ -38,6 +38,8 @@ public class day1_Swag_labs {
 		File src=tks.getScreenshotAs(OutputType.FILE);
 		File dest=new File("C:\\Users\\Admin\\Desktop\\javacapgemini\\New folder\\products-page.png");
 		FileHandler.copy(src, dest);
+
+		driver.close();
 		
 	}
 
