@@ -28,14 +28,14 @@ public class firstnamesurnamealign {
 		WebElement surname = driver.findElement(By.id("_R_1kl2p4jikacppb6amH1_"));
 		// firstname location
 		System.out.println(firstname.getLocation());
-		int firstx = firstname.getLocation().getX();
-		int firsty = firstname.getLocation().getY();
+		int firstxvalue = firstname.getLocation().getX();
+		int firstyvalue = firstname.getLocation().getY();
 		// surname location
 		System.out.println(surname.getLocation());
-		int surnamex = surname.getLocation().getX();
-		int surnamey = surname.getLocation().getY();
+		int surnamexvalue = surname.getLocation().getX();
+		int surnameyvalue = surname.getLocation().getY();
 		// verify alignment
-		if(firsty==surnamey)
+		if(firstyvalue==surnamevaluey)
 		{
 			System.out.println("firstname and surname textfields are aligned");
 		}
@@ -56,8 +56,123 @@ public class firstnamesurnamealign {
 1.Navigate to facebook application 
 2.capture the location of create new account button.
 3.Capture the Dom Attribute and dom property for email address textfield before and after entering email address
-4.click on create new account capture the size of sign up button
-5.capture the css properties of sign up button (minimum 3).
+4.click on create new account capture the size of submit button
+5.capture the css properties of submit button (minimum 3).
 
 
+package assessment;
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Point;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class day2testcase02 {
+
+	public static void main(String[] args) throws InterruptedException {
+		WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+		driver.get("https://www.facebook.com/");
+		// get location of create new account button
+		WebElement createaccount = driver.findElement(By.xpath("//span[text()='Create new account']"));
+		Point location=createaccount.getLocation();
+		System.out.println("Location of create new Act "+location);
+		// domattribute and domproperty before 
+		WebElement emailf = driver.findElement(By.id("_R_1h6kqsqppb6amH1_"));
+		String beforeAttribute=emailf.getDomAttribute("value");
+		String beforeProperty=emailf.getDomProperty("value");
+		System.out.println(beforeAttribute);
+		System.out.println(beforeProperty);
+		emailf.sendKeys("himuvarun@gmail.com");
+		String afterAttribute=emailf.getDomAttribute("value");
+		String afterProperty=emailf.getDomProperty("value");
+		System.out.println(afterAttribute);
+		System.out.println(afterProperty);
+		// click on create new account
+		createaccount.click();
+		// cssvalue for submit button
+		WebElement subbtn = driver.findElement(By.xpath("(//span[text()='Submit'])[2]"));
+		System.out.println("Submit size "+subbtn.getSize());
+		System.out.println(subbtn.getCssValue("color"));
+		System.out.println(subbtn.getCssValue("font-size"));
+		System.out.println(subbtn.getCssValue("box-sizing"));
+		driver.quit();
+		
+	}
+
+}
+
+//Testcase 3 
+
+1.Navigate to demowebshop
+2.Identify the webelement(14.1-inch laptop)-->identify add to cart button capture the size and them click on the buuton.
+3.Click on shopping cart link.
+4.verify remove check box is selected or not and capture the complete information using getRect().
+5.Verify Alert message is displayed or not before and after clicking on Apply coupon button
+6.Take screenshot of image(Laptop).
+
+package assessment;
+
+import java.io.File;
+import java.io.IOException;
+import java.time.Duration;
+
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.io.FileHandler;
+
+public class day2testcase03 {
+	public static void main(String[] args) throws InterruptedException, IOException
+	{
+		//launch the browser
+		WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+		driver.get("https://demowebshop.tricentis.com/");
+		WebElement addtocart = driver.findElement(By.xpath("(//input[@value='Add to cart'])[2]"));
+		System.out.println(addtocart.getSize());
+		addtocart.click();
+		Thread.sleep(1000);
+		// shopping cart link
+		driver.findElement(By.linkText("shopping cart")).click();
+		// remove 
+		WebElement remove = driver.findElement(By.name("removefromcart"));
+		System.out.println(remove.isSelected());
+		System.out.println(remove.getRect().getHeight());
+		System.out.println(remove.getRect().getWidth());
+		System.out.println(remove.getRect().getX());
+		System.out.println(remove.getRect().getY());
+		WebElement apcp = driver.findElement(By.xpath("//input[@value='Apply coupon']"));
+		try
+		{
+			WebElement message = driver.findElement(By.xpath("//div[@class='message']"));
+			System.out.println(message.getText());
+		}
+		catch(NoSuchElementException e)
+		{
+				System.out.println(" no message is displayed");
+		}
+		apcp.click();
+		
+		WebElement afmessage = driver.findElement(By.xpath("//div[@class='message']"));
+		System.out.println(afmessage.getText());
+	    WebElement ele = driver.findElement(By.xpath("(//img[@alt='Picture of 14.1-inch Laptop'])[2]"));
+		File src = ele.getScreenshotAs(OutputType.FILE);
+		File desc = new File("./Ss/lAPTOP.png");
+		FileHandler.copy(src, desc);
+		Thread.sleep(2000);
+		driver.quit();
+		
+	}
+
+}
 
