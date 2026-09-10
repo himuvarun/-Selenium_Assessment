@@ -1,0 +1,104 @@
+Day 1: Assessment
+
+TestCase-1
+
+1. Launch SauceDemo.
+2. Login using the valid credentials provided on the application.
+3. On the Products page, use JavaScript Executor to scroll to the bottom of the page.
+4. Take a screenshot of the page after scrolling.
+5. Save the screenshot with a meaningful name such as products-page.png.
+
+
+package mouseAction;
+
+import java.io.File;
+import java.io.IOException;
+import java.time.Duration;
+import org.openqa.selenium.io.FileHandler;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.edge.EdgeDriver;
+
+public class day1_Swag_labs {
+
+	public static void main(String[] args) throws IOException, InterruptedException {
+		// TODO Auto-generated method stub
+		WebDriver driver=new EdgeDriver();
+		driver.manage().window().maximize();	
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+		driver.get("https://www.saucedemo.com/");
+		WebElement name=driver.findElement(By.id("user-name"));
+		name.sendKeys("standard_user");
+		
+		WebElement password=driver.findElement(By.id("password"));
+		password.sendKeys("secret_sauce");
+		
+		WebElement btn=driver.findElement(By.id("login-button"));
+		btn.click();
+		
+		JavascriptExecutor js=(JavascriptExecutor) driver;
+		js.executeScript("window.scrollTo(0,500)");
+		Thread.sleep(2000);
+		
+		TakesScreenshot tks=(TakesScreenshot) driver;
+		File src=tks.getScreenshotAs(OutputType.FILE);
+		File dest=new File("C:\\Users\\Admin\\Desktop\\javacapgemini\\New folder\\products-page.png");
+		FileHandler.copy(src, dest);
+
+		driver.close();
+		
+	}
+
+}
+
+
+TestCase-2
+
+1. Navigate to Myntra application.
+2. Search for any product.
+3. Add the product to the wishlist.
+4. Verify whether it is added or not.
+
+
+package mouseAction;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.edge.EdgeDriver;
+
+public class day1_Myntra {
+
+	public static void main(String[] args) throws InterruptedException {
+		// TODO Auto-generated method stub
+		WebDriver driver=new EdgeDriver();
+		driver.manage().window().maximize();
+		driver.get("https://www.myntra.com/");
+		Thread.sleep(2000);
+		
+		WebElement ref = driver.findElement(By.className("desktop-searchBar"));
+		Thread.sleep(2000);
+		ref.sendKeys("shoes",Keys.ENTER);
+		WebElement ref1 = driver.findElement(By.xpath("(//span[@class='product-wishlistFlex product-actionsButton product-wishlist ']) [1]"));
+		JavascriptExecutor js= (JavascriptExecutor) driver;
+		js.executeScript("arguments[0].click()",ref1);
+		Thread.sleep(4000);
+		
+		String link=driver.getCurrentUrl();
+		System.out.println(link);
+		if(link.equals("https://www.myntra.com/login?referer=https://www.myntra.com/shoes?rawQuery=shoes")) {
+			System.out.println("product added wishlist");
+		}else {
+			System.out.println("product isnot added");
+		}
+		driver.close();
+	}
+
+}
