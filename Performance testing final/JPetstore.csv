@@ -1,0 +1,3 @@
+﻿User_Id,Password,confirm_Password,FirstName,LastName,Email,Phone,Address1,Address2,City,State,Zip,Country,Language,Categoryid,Creditcard,Creditexp
+2,Pass23,Pass23,k,varun,himuvarun,9887654321,ballari,ballari,Ballari,Karnataka,583102,india,english,dogs,1.00E+08,16-Nov
+5,Pass67,Pass67,P,Param,param,9675423589,hubli,hubli,hubli,Karnataka,315662,india,english,cats,1.00E+07,03-Nov
